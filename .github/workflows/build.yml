@@ -1,4 +1,4 @@
-name: CI: build & push Docker image to Docker Hub
+name: CI build & push Docker image to Docker Hub
 
 on:
   push:
@@ -7,6 +7,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
