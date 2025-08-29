@@ -3,9 +3,11 @@
                   xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
                   id="Definitions_1"
                   targetNamespace="http://bpmn.io/schema/bpmn">
-  <bpmn:process id="SentinelOS_ProcesoBase" isExecutable="false">
+
+  <bpmn:process id="SentinelOS_ProcessBase" isExecutable="false">
     <bpmn:startEvent id="StartEvent" name="Inicio SentinelOS"/>
     <bpmn:task id="Tarea1" name="Carga de módulos básicos"/>
     <bpmn:task id="Tarea2" name="Monitoreo inicial (scripts)"/>
@@ -17,4 +19,8 @@
     <bpmn:sequenceFlow id="flow3" sourceRef="Tarea2" targetRef="Tarea3"/>
     <bpmn:sequenceFlow id="flow4" sourceRef="Tarea3" targetRef="EndEvent"/>
   </bpmn:process>
+
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="SentinelOS_ProcessBase"/>
+  </bpmndi:BPMNDiagram>
 </bpmn:definitions>
