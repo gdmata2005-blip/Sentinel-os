@@ -21,3 +21,4 @@ Versión mínima activa. Repositorio creado el **28-08-2025**.
 1. Definir módulos básicos de SentinelOS.
 2. Agregar documentación técnica (diagramas, flujos).
 3. Iniciar pruebas de integración con el Bunker.
+retry CI Fri Aug 29 02:19:21 AM UTC 2025
