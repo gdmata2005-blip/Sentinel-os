@@ -3,11 +3,11 @@ name: CI build & push Docker image to Docker Hub
 on:
   push:
     branches: [ "main" ]
+    tags: [ "v*" ]  # <-- si empujas un tag vX.Y.Z, también corre
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -24,10 +24,23 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Compute tags
+        id: meta
+        run: |
+          IMAGE="camu9100/sentinel-os"
+          if [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
+            # Tag de release vX.Y.Z -> publica versión y latest
+            VER="${GITHUB_REF_NAME#v}"
+            echo "tags=${IMAGE}:${VER},${IMAGE}:latest" >> $GITHUB_OUTPUT
+          else
+            # Push normal a main -> publica dev
+            echo "tags=${IMAGE}:dev" >> $GITHUB_OUTPUT
+          fi
+
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
           context: .
           file: ./Dockerfile
           push: true
-          tags: camu9100/sentinel-os:dev
+          tags: ${{ steps.meta.outputs.tags }}
