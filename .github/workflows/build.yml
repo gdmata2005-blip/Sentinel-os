@@ -1,13 +1,8 @@
-name: build-and-push
+name: CI: build & push Docker image to Docker Hub
+
 on:
   push:
     branches: [ "main" ]
-    paths:
-      - 'Dockerfile'
-      - 'docker/**'
-      - 'scripts/**'
-      - '.github/workflows/build.yml'
-  workflow_dispatch:
 
 jobs:
   build:
@@ -19,7 +14,7 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
-      - name: Set up Docker Buildx
+      - name: Set up Buildx
         uses: docker/setup-buildx-action@v3
 
       - name: Login to Docker Hub
@@ -28,13 +23,10 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build & Push
-        uses: docker/build-push-action@v6
+      - name: Build and push
+        uses: docker/build-push-action@v5
         with:
           context: .
           file: ./Dockerfile
-          platforms: linux/amd64
           push: true
-          tags: camus/sentinelos:dev
-          build-args: |
-            HEARTBEAT_SECONDS=30
+          tags: camu9100/sentinel-os:dev
